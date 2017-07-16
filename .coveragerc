@@ -1,0 +1,3 @@
+[run]
+source = search_engine
+omit = search_engine/test*
