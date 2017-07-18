@@ -17,20 +17,22 @@ components = pyramid_bowerstatic.create_components('search_engine',
 
 @view_config(route_name='home', renderer='templates/home.jinja2')
 def my_view(request):
-    results = {}
+    tmp_results = {}
     request.include(components, 'bootstrap')
     request.include(components, 'jquery')
+    query = ''
+    results = []
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        query_tuple = re.split('; |, |\*|\n|\)|\(| |\.|،|:|؟|\?|,|\u200c', query.replace('\xa0', ' '))
 
-    query = request.POST.get('query')
-    query_tuple = re.split('; |, |\*|\n|\)|\(| |\.|،|:|؟|\?|,|\u200c', query.replace('\xa0', ' '))
+        for word in query_tuple:
 
-    for word in query_tuple:
+            if word in reverse_index:
+                for page in reverse_index[word]:
+                    # results[page] = results.get(page, 0) + 1
+                    tmp_results.setdefault(page, set()).add(word)
 
-        if word in reverse_index:
-            for page in reverse_index[word]:
-                # results[page] = results.get(page, 0) + 1
-                results.setdefault(page, set()).add(word)
-
-    results = sorted(results.items(), key=lambda x:len(x[1]))[::-1]
+        results = sorted(tmp_results.items(), key=lambda x:len(x[1]))[::-1]
 
     return {'results': results, 'page_index': modified_page_index, 'query': query}
