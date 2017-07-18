@@ -20,6 +20,7 @@ def my_view(request):
     results = {}
     request.include(components, 'bootstrap')
     request.include(components, 'jquery')
+
     query = request.POST.get('query')
     query_tuple = re.split('; |, |\*|\n|\)|\(| |\.|،|:|؟|\?|,|\u200c', query.replace('\xa0', ' '))
 
@@ -27,10 +28,12 @@ def my_view(request):
 
         if word in reverse_index:
             for page in reverse_index[word]:
-                results[page] = results.get(page, 0) + 1
+                # results[page] = results.get(page, 0) + 1
+                results.setdefault(page, set()).add(word)
 
-    results = sorted(results.items(), key=lambda x:x[1])[::-1]
-    # print(results)
+    results = sorted(results.items(), key=lambda x:len(x[1]))[::-1]
+    # for i in results:
+    #     print(i)
 
 
     return {'results': results, 'page_index': modified_page_index, 'query': query}
