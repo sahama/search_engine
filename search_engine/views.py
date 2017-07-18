@@ -32,8 +32,5 @@ def my_view(request):
                 results.setdefault(page, set()).add(word)
 
     results = sorted(results.items(), key=lambda x:len(x[1]))[::-1]
-    # for i in results:
-    #     print(i)
-
 
     return {'results': results, 'page_index': modified_page_index, 'query': query}
