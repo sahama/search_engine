@@ -33,8 +33,13 @@ def my_view(request):
                     # results[page] = results.get(page, 0) + 1
                     tmp_results.setdefault(page, {})[word] = reverse_index[word]['idf']
 
-        print(tmp_results)
+        # print(tmp_results)
+
         # results = sorted(tmp_results.items(), key=lambda x:sum([reverse_index[key]['idf'] for key in x[1]]))[::-1]
         results = sorted(tmp_results.items(), key=lambda x:sum([x[1][word] for word in x[1]]))[::-1]
+        results = [ list (i) for  i in results]
+        for r in results:
+            r[1] = sorted(r[1].items(), key=lambda x: x[1])[::-1]
+            # r [1] = sorted(r[1].items(), key=lambda x: x.values[0])
 
     return {'results': results, 'page_index': modified_page_index, 'query': query}

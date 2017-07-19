@@ -14,14 +14,23 @@
 {#    {{ page_index }}#}
 
 {% if results %}
-    <label class="label" for="results">Results:</label>
+    <h2>Results:</h2>
 
     <table class="table" id="results">
     {% for result in results %}
         <tr>
         <td>
-        <a href="{{ page_index[result[0]] }}"> {{ page_index[result[0]] }}</a> <br>
-            words: {{ result[1] }}
+        <a href="{{ page_index[result[0]] }}"> {{ page_index[result[0]] }}</a>
+        <h4>
+            terms and score:
+        </h4>
+        <ul>
+
+
+            {% for term in result[1] %}
+                <li>{{ term[0] }} : {{ term[1] }}</li>
+                {% endfor %}
+        </ul>
         </td>
         </tr>
     {% endfor %}
