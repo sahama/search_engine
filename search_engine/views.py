@@ -24,15 +24,17 @@ def my_view(request):
     results = []
     if request.method == 'POST':
         query = request.POST.get('query')
-        query_tuple = re.split('; |, |\*|\n|\)|\(| |\.|،|:|؟|\?|,|\u200c', query.replace('\xa0', ' '))
+        query_tuple = re.split('; |, |\*|\n|\)|\(| |\.|،|:|؟|\?|,|\u200c|\"', query.replace('\xa0', ' '))
 
         for word in query_tuple:
 
             if word in reverse_index:
-                for page in reverse_index[word]:
+                for page in reverse_index[word]['tf'].keys():
                     # results[page] = results.get(page, 0) + 1
-                    tmp_results.setdefault(page, set()).add(word)
+                    tmp_results.setdefault(page, {})[word] = reverse_index[word]['idf']
 
-        results = sorted(tmp_results.items(), key=lambda x:len(x[1]))[::-1]
+        print(tmp_results)
+        # results = sorted(tmp_results.items(), key=lambda x:sum([reverse_index[key]['idf'] for key in x[1]]))[::-1]
+        results = sorted(tmp_results.items(), key=lambda x:sum([x[1][word] for word in x[1]]))[::-1]
 
     return {'results': results, 'page_index': modified_page_index, 'query': query}
