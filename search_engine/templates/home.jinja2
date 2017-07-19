@@ -2,11 +2,12 @@
 
 {% block content%}
 <div class="content">
+<h4>به نام خدا</h4>
  <form method="post">
   <div class="form-group">
-    <input type="text" class="form-control" name="query"  placeholder="Search" value="{{ query }}">
+    <input type="text" class="form-control" name="query"  placeholder="جستجو" value="{{ query }}">
   </div>
-  <button type="submit" class="btn btn-success btn-block">Search</button>
+  <button type="submit" class="btn btn-success btn-block">جستجو</button>
 </form>
 {#    <h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">Starter scaffold</span></h1>#}
 {#    <p class="lead">Welcome to <span class="font-normal">{{project}}</span>, an&nbsp;application generated&nbsp;by<br>the <span class="font-normal">Pyramid Web Framework 1.8.4</span>.</p>#}
@@ -14,16 +15,17 @@
 {#    {{ page_index }}#}
 
 {% if results %}
-    <h2>Results:</h2>
+    <h2>نتایج:</h2>
 
     <table class="table" id="results">
     {% for result in results %}
         <tr>
-        <td>
-        <a href="{{ page_index[result[0]] }}"> {{ page_index[result[0]] }}</a>
-        <h4>
-            terms and score:
-        </h4>
+        <td >
+        <div class="result_link">
+
+            <a  href="{{ page_index[result[0]] }}"> {{ page_index[result[0]] }}</a>
+        </div>
+        <h4>کلمات و امتیازات:</h4>
         <ul>
 
 

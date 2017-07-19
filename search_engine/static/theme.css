@@ -2,6 +2,7 @@
 body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  direction: rtl;
   /*color: #ffffff;*/
 }
 h1,
@@ -26,7 +27,7 @@ p {
   font-weight: 700;
 }
 .starter-template {
-  margin-top: 250px;
+  margin-top: 50px;
 }
 .starter-template .content {
   margin-left: 100px;
@@ -142,4 +143,7 @@ p {
   .starter-template .copyright {
     margin-top: 20px;
   }
+}
+.result_link {
+  direction: ltr;
 }
